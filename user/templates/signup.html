@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h1>hobbyLink</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <h1>サインアップ</h1>
+            <h2>ユーザー名</h2>
+            <input type="text" name="user_name">
+            <h2>メールアドレス</h2>
+            <input type="email" name="email">
+            <h2>パスワード</h2>
+            <input type="password" name="password">
+            <button type="submit">サインアップ</button>
+        </form>
+    </main>
+    {% if error %}
+        <script src="{% static 'js/alert.js' %}"></script>
+    {% endif %}
+</body>
+</html>

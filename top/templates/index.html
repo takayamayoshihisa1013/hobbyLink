@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+    <link rel="stylesheet" href="{% static 'css/top.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <article>
+            <section class="header_section">
+                <div class="slider">
+                    <div><img src="{% static 'images/slick/slick1.jpg' %}" alt=""  class="div_img"></div>
+                    <div><img src="{% static 'images/slick/slick2.webp' %}" alt=""  class="div_img"></div>
+                    <div><img src="{% static 'images/slick/slick3.webp' %}" alt="" class="div_img"></div>
+                    <div><img src="{% static 'images/slick/slick4.webp' %}" alt="" class="div_img"></div>
+                    <div><img src="{% static 'images/slick/slick5.avif' %}" alt="" class="div_img"></div>
+                </div>
+                <nav class="top_nav">
+                    <ul>
+                        <h1>hobbyLink</h1>
+                        <h2>～ 趣味を今よりももっと楽しく ～</h2>
+                        <li id="start_button"><a href="/user/login/">始める</a></li>
+                        <li>hobbyLinkとは</li>
+                    </ul>
+                </nav>
+                <div class="text">
+                    <h1>趣味を通じて新しい世界を広げよう</h1>
+                    <h2>共通の趣味を持つ仲間と出会い、楽しさを共有しましょう</h2>
+                </div>
+            </section>
+            <!-- <section>
+                
+                <div>
+                    <div class="img_div">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text_div">
+                        <p></p>
+                    </div>
+                </div>
+            </section> -->
+        </article>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script src="{% static 'js/slick.js' %}"></script>
+</body>
+</html>
