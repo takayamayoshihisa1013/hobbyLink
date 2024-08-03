@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import User
 
+# データベースに湯z－ザーが存在するか確認できるものらしい
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
 # djangoのデータベースのエラーに使うもの？
 from django.db import IntegrityError
 
@@ -10,13 +14,12 @@ import uuid
 
 
 def login(request):
-
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-    return render(request, "login.html")
-
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        
+    return render(request, 'login.html')
 
 def signup(request):
     error = False

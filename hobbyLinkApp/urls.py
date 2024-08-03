@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("top.urls")),
     path("user/", include("user.urls")),
+    path("hobbyLink/", include("app.urls"))
 ]

@@ -10,7 +10,7 @@
 <body>
     <main>
         <h1>hobbyLink</h1>
-        <form action="post">
+        <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <h1>ログイン</h1>
             <h2>メールアドレス</h2>
@@ -19,7 +19,14 @@
             <input type="password" name="password">
             <button type="submit">ログイン</button>
         </form>
-        <p>アカウントをお持ちでない方は<a href="/user/signup">こちら</a></p>
+        <p>アカウントをお持ちでない方は<a href="{% url 'signup' %}">こちら</a></p>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </main>
 </body>
 </html>

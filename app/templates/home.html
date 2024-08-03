@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="left">
+        <section class="trend_post">
+            <h1>話題の投稿</h1>
+            <div>
+
+            </div>
+        </section>
+    </div>
+    <div class="right">
+        <section class="trend_tag">
+            <h1>注目のタグ</h1>
+        </section>
+        <section class="reminder">
+            <h1>通知</h1>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+}
+
+main .nav {
+    width: 15%;
+    background-color: black;
+    height: 95vh;
+    color: #ffff;
+    padding-top: 5vh;
+}
+
+main .nav h1 {
+    font-size: 1.9vw;
+    font-family: 'Comic Sans MS';
+    text-align: center;
+}
+
+main .nav nav ul {
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin-top: 5vh;
+}
+
+main .nav nav ul li {
+    height: 7vh;
+    line-height: 7vh;
+    /* text-align: center; */
+    width: 70%;
+    padding-left: 10%;
+    margin: 0 10% 0 10%;
+    transition: 0.4s;
+    border-radius: 10px;
+    margin-top: 1vh;
+}
+
+main .nav nav ul li:hover {
+    background-color: #696969;
+}
+
+main .nav nav ul li a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.1vw;
+}
+
+main .content {
+    height: 100%;
+    /* width: 85%; */
+}

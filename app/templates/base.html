@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block css %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <main>
+        <div class="nav">
+            <h1>hobbyLink</h1>
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">タイムライン</a></li>
+                    <li><a href="">通知</a></li>
+                    <li><a href="">チャット</a></li>
+                </ul>
+            </nav>
+        </div>
+        {% block content %}
+        {% endblock %}
+        
+    </main>
+</body>
+
+</html>

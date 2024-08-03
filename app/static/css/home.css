@@ -1,0 +1,45 @@
+.content {
+    display: flex;
+    justify-content: space-around;
+    height: 95vh;
+    width: 82%;
+    margin: 2.5vh auto;
+}
+
+.left {
+    width: 55%;
+    height: 95vh;
+}
+
+.left .trend_post {
+    border: 1px solid;
+    border-radius: 10px;
+    height: 93vh;
+    width: 99%;
+    padding: 1vh 2%;
+}
+h1 {
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.right {
+    width: 39%;
+}
+
+.right .trend_tag {
+    border: 1px solid;
+    border-radius: 10px;
+    height: 44vh;
+    width: 99%;
+    padding: 1vh 2%;
+    margin-bottom: calc(3vh - 4px);
+}
+
+.right .reminder {
+    border: 1px solid;
+    border-radius: 10px;
+    height: 44vh;
+    width: 99%;
+    padding: 1vh 2%;
+    
+}
