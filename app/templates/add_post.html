@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/add_post.css' %}">
+{% endblock %}
+
+{% block title %}
+投稿する
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <form method="post" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="post_header">
+            <h3 class="user_name">通りすがりの者</h3>
+            <h4 class="user_id">@aaaaa</h4>
+        </div>
+        <div class="post_body">
+            <textarea name="post_text" placeholder="投稿内容を入力してください（必須）"></textarea>
+        </div>
+        <div class="post_tag">
+            <input type="text" placeholder="タグを入力してください（例）#サイクリング #サイクリング好きとつながりたい" id="tag_input" name="tag">
+            <div id="suggestions" class="suggestions"></div>
+        <div class="img_file">
+            <input type="file" name="post_images">
+        </div>
+        <div class="add_img">
+            <button type="button" id="add_img">+</button>
+        </div>
+        <button type="submit">投稿する</button>
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/add_post.js' %}"></script>
+
+{% endblock %}

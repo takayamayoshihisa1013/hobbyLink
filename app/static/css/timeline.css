@@ -1,0 +1,204 @@
+.content {
+    min-height: 100vh;
+    width: 84%!important;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f5f5f5;
+}
+
+.post_section {
+    width: 50%;
+    position: relative;
+    overflow: scroll;
+
+    overflow-x: hidden;
+
+    max-height: 100vh;
+}
+
+.post_section .post {
+    width: 94%;
+    margin: 20px auto;
+    padding: 2%;
+    border: none;
+    border-radius: 15px;
+    min-height: 20vh;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    background-color: #ffffff;
+
+}
+
+.post_section .post:first-of-type {
+    margin-top: 10vh; /* 例として5vhに設定 */
+    /* background-color: #000!important; */
+}
+
+.post_section .post:hover {
+    box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+}
+
+.post_section .post_search {
+    width: 38vw;
+    margin: 0 auto;
+    display: flex;
+    height: 4vh;
+    padding:4vh 1vw 2vh;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    /* background-color: #FFFF; */
+}
+
+.post_section form input, .post_section form button {
+    display: block;
+    height: 4.4vh;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 20px;
+}
+
+.post_section form input {
+    width: 85%;
+    height: 4vh;
+    border: 1px solid #d1d1d1;
+    padding: 0 15px;
+    border: #000 1px solid;
+}
+
+.post_section form button {
+    width: 10%;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.post_section form button:hover {
+    background-color: #357abd;
+}
+
+
+
+.post_section .post .post_header {
+    display: flex;
+    border-bottom: 1px solid #e6e6e6;
+    height: 5vh;
+    width: 100%;
+    line-height: 5vh;
+    align-items: center;
+}
+
+.post_section .post .post_header .user_name {
+    font-size: 1.1vw;
+    font-weight: 600;
+    margin-left: 1vw;
+    color: #333;
+}
+
+.post_section .post .post_header .user_id {
+    font-size: 1.0vw;
+    font-weight: 400;
+    color: #666;
+    margin-left: 10px;
+}
+
+.post_section .post .post_header .time {
+    font-size: 0.9vw;
+    text-align: right;
+    margin-left: auto;
+    color: #999;
+    font-weight: 400;
+}
+
+.post_section .post .post_body {
+    min-height: 8vh;
+    margin: 1vh 1vw;
+    color: #333;
+    line-height: 1.6;
+}
+
+.post_section .post .post_footer {
+    
+    height: 5vh;
+    font-size: 0.9vw;
+}
+
+.post_section .post .post_footer form {
+    justify-content: space-around;
+    display: flex;
+    height: 100%;
+    line-height: 5vh;
+}
+
+.post_section .post .post_footer h3 {
+    font-weight: 400;
+    width: 2vw;
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s;
+    display: block;
+}
+
+.post_section .post .post_footer h3:hover {
+    color: #4a90e2;
+}
+
+.post_section .post .post_footer #star {
+    color: #ffd700;
+}
+
+.post_section .post_add {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 30px;
+    left: 780px;
+}
+
+.post_section .post_add a {
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    background-color: #4a90e2;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.post_section .post_add a:hover {
+    background-color: #357abd;
+    transform: scale(1.1);
+}
+
+.img_section {
+    width: 50%;
+    min-height: 100vh;
+    border-left: 1px solid #e6e6e6;
+    background-color: #ffffff;
+    max-height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.img_section div {
+    width: 98%;
+    margin: 0 auto;
+    padding: 20px 0;
+    /* display: none; */
+}
+
+.img_section div img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}

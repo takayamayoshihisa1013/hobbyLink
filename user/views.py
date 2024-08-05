@@ -14,12 +14,27 @@ import uuid
 
 
 def login(request):
+    user_data = "get"
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
         
+        print(email, password)
         
-    return render(request, 'login.html')
+        try:
+            user_data = User.objects.get(email=email, password=password)
+            print(user_data)
+            request.session['user_id'] = str(user_data.user_id)
+            return redirect("/hobbyLink/")
+        except:
+            print("ない")
+            user_data = None
+        
+    context = {
+        "user_data":user_data
+    }
+        
+    return render(request, 'login.html', context)
 
 def signup(request):
     error = False

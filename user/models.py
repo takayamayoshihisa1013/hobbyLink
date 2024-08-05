@@ -6,8 +6,7 @@ class User(models.Model):
     user_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255 , unique=True)
     password = models.CharField(max_length=100, default="defaultpassword")
-    profile_id = models.CharField(max_length=20, null=True)
-    
+    profile_id = models.CharField(max_length=20, null=True, unique=True)
 
     def __str__(self):
-        return self.user_name
+        return str(self.user_id)

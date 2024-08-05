@@ -1,0 +1,149 @@
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.content {
+    width: 84%!important;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.content form {
+    width: 65vw;
+    margin: 20px auto;
+    padding: 2%;
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.content form .post_header {
+    display: flex;
+    border-bottom: 1px solid #e6e6e6;
+    height: 5vh;
+    width: 100%;
+    line-height: 5vh;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.content form .post_header .user_name {
+    font-size: 1.1vw;
+    font-weight: 600;
+    margin-left: 1vw;
+    color: #333;
+}
+
+.content form .post_header .user_id {
+    font-size: 1.0vw;
+    font-weight: 400;
+    color: #666;
+    margin-left: 10px;
+}
+
+.content form .post_body {
+    width: 100%;
+    margin-bottom: 1vh;
+}
+
+.content form .post_body textarea {
+    width: 98%;
+    height: 40vh;
+    font-size: 1.2vw;
+    padding: 1%;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    resize: vertical;
+}
+
+.content form .post_tag {
+    margin-bottom: 1vh;
+    width: 100%;
+}
+
+
+
+.content form .post_tag input {
+    width: 98%;
+    /* height: 4vh; */
+    font-size: 1.0vw;
+    padding: 1%;
+    display: block;
+    border: #d1d1d1 1px solid;
+    border-radius: 10px ;
+}
+
+.content form .suggestions {
+    border: 1px solid #ccc;
+    width: 65vw;
+    position: absolute;
+    max-height: 25vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    z-index: 1000;
+    background: white;
+}
+.content form .suggestion-item {
+    /* padding: 5px; */
+    line-height: 5vh;
+    height: 5vh;
+    cursor: pointer;
+}
+.content form .suggestion-item:hover {
+    background: #eee;
+}
+
+.content form .img_file {
+    margin-bottom: 1vh;
+}
+
+.content form .img_file input[type="file"]{
+    width: 98%;
+    padding: 1%;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    margin-top: 1vh;
+}
+
+.content .add_img {
+    margin-bottom: 1.5vh;
+}
+
+.content #add_img {
+    margin-top: 2vh;
+    width: 100%;
+    padding: 1%;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    display: block;
+    font-size: 1.2vw;
+    transition: 0.4s;
+}
+
+.content #add_img:hover {
+    background-color: #d1d1d1;
+}
+
+.content form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.content form button[type="submit"]:hover {
+    background-color: #357abd;
+}

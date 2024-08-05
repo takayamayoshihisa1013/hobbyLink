@@ -1,1 +1,71 @@
-投稿された文章を左に、画像がある場合は右に表示する感じはどうか
+<!-- 投稿された文章を左に、画像がある場合は右に表示する感じはどうか -->
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/timeline.css' %}">
+{% endblock %}
+
+{% block title %}
+タイムライン
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <section class="post_section">
+        <form action="" class="post_search">
+            <input type="text" name="post_search">
+            <button type="submit">検索</button>
+        </form>
+        {% for post in posts_with_related_data %}
+        <div class="post" id="post-{{ post.id }}" onclick="getPostId(this.id)">
+            <div class="post_header">
+                <h3 class="user_name">{{ post.user_id.user_name }}</h3>
+                <h4 class="user_id">@{{ post.user_id.user_name }}</h4>
+                <h4 class="time">{{ post.post_time }}</h4>
+            </div>
+            <div class="post_body">
+                <p>{{ post.post_text }}</p>
+            </div>
+            <div class="post_tag"></div>
+            <div class="post_footer">
+                <form action="">
+                    <h3><i class="fa-solid fa-comment"></i>{{ post.comment_set.count }}</h3>
+                    <h3><i class="fa-solid fa-heart"></i>{{ post.like_set.count }}</h3>
+                    <h3 id="star"><i class="fa-solid fa-star"></i></h3>
+                </form>
+                    
+            </div>
+        </div>
+        {% endfor %}
+        <div class="post_add">
+            <a href="add_post/">+</a>
+        </div>
+    </section>
+    <section class="img_section">
+        {% for post in posts_with_related_data %}
+            {% for image in post.images.all %}
+                {% if not image == "" %}
+                    {% if forloop.first %}
+                    <div id="post_img-{{ post.id }}" class="post_img" style="display: none;" >
+                    
+                    {% endif %}
+                    <div>
+                        <img src="{% static 'images/post_img/' %}{{ image.filename }}" alt="">
+                    </div>
+                    {% if forloop.last %}
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <h2>画像は投稿されていません</h2>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+<script src="{% static 'js/timeline.js' %}"></script>
+
+{% endblock %}

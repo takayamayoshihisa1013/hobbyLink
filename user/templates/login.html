@@ -20,13 +20,13 @@
             <button type="submit">ログイン</button>
         </form>
         <p>アカウントをお持ちでない方は<a href="{% url 'signup' %}">こちら</a></p>
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
+        {% block javascript %}
+        {% if not user_data %}
+        <script>
+            alert("メールアドレス、またはパスワードが間違えています。")
+        </script>
         {% endif %}
+        {% endblock %}
     </main>
 </body>
 </html>

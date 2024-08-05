@@ -7,14 +7,16 @@ main {
     width: 100%;
     min-height: 100vh;
     display: flex;
+    background-color: #FFFF;
 }
 
 main .nav {
-    width: 15%;
+    width: 17%;
     background-color: black;
     height: 95vh;
     color: #ffff;
     padding-top: 5vh;
+    position: fixed;
 }
 
 main .nav h1 {
@@ -51,9 +53,13 @@ main .nav nav ul li a {
     color: inherit;
     text-decoration: none;
     font-size: 1.1vw;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 main .content {
-    height: 100%;
-    /* width: 85%; */
+    width: 82%;
+    /* margin: 2.5vh auto ; */
+    margin-left: 18%;
 }
