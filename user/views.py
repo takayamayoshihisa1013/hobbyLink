@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import User
 
+from django.contrib.auth import authenticate, login as auth_login
+
 # データベースに湯z－ザーが存在するか確認できるものらしい
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -26,12 +28,12 @@ def login(request):
             print(user_data)
             request.session['user_id'] = str(user_data.user_id)
             return redirect("/hobbyLink/")
-        except:
+        except User.DoesNotExist:
             print("ない")
             user_data = None
         
     context = {
-        "user_data":user_data
+        "user_data": user_data
     }
         
     return render(request, 'login.html', context)

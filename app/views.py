@@ -1,9 +1,18 @@
 from django.shortcuts import render
 from django.conf import settings
+from django.http import JsonResponse
 from django.db.models import Prefetch
 from .models import Post_data, Image, Like, Comment
 from user.models import User
 import os
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Like, Post_data
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
 # Create your views here.
 
 # なんの拡張子かみる
@@ -64,28 +73,24 @@ def add_post(request):
         post_text = request.POST.get("post_text")
         tag = request.POST.get("tag")
         post_files = request.FILES.getlist("post_images")
-        print(post_text,tag,post_files)
-        
-        # print(request.session["user_id"])
+        print(post_text, tag, post_files)
         
         # ユーザーインスタンスを獲得してからじゃないとだめらしい。
-        user = User.objects.get(user_id = request.session["user_id"])
+        user = User.objects.get(user_id=request.session["user_id"])
         
         new_post = Post_data(
-            user_id = user,
-            post_text = post_text
+            user_id=user,
+            post_text=post_text
         )
         new_post.save()
         
         # 新しく追加したpost_idを取得する
-        # これもインスタンスがないとダメと言われた
-        new_post_id = Post_data.objects.get(id = new_post.id)
+        new_post_id = Post_data.objects.get(id=new_post.id)
         print(new_post_id)
         
-        
-        
         new_post_like = Like(
-            post_id = new_post_id
+            post_id=new_post_id,
+            user_id=user  # ここで正しいUserインスタンスを渡す
         )
         new_post_like.save()
         
@@ -98,17 +103,51 @@ def add_post(request):
             with open(file_path, 'wb+') as destination:
                 for chunk in file.chunks():
                     destination.write(chunk)
-                    # print(file.name,"保存")
             
             print(file)
             
             new_post_img = Image(
-                post_id = new_post_id,
-                filename = file.name
+                post_id=new_post_id,
+                filename=file.name
             )
             
             new_post_img.save()
             
-        
-        
     return render(request, "add_post.html")
+
+
+
+def toggle_like(request, post_id):
+    if 'user_id' not in request.session:
+        return JsonResponse({'success': False, 'error': 'User not authenticated'}, status=403)
+    
+    try:
+        post = Post_data.objects.get(id=post_id)
+        user_id = request.session['user_id']
+        user = User.objects.get(user_id=user_id)
+        
+        # Like オブジェクトを取得または作成
+        like, created = Like.objects.get_or_create(post_id=post, user_id=user)
+        
+        if not created:
+            # 既に「いいね」されている場合、「いいね」を削除
+            like.delete()
+            liked = False
+        else:
+            # 「いいね」を追加
+            like.like_num += 1
+            like.save()
+            liked = True
+        
+        return JsonResponse({'success': True, 'like_count': post.like_set.count(), 'liked': liked})
+    except Post_data.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
+    except User.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'User not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    
+    
+def reminder(request):
+    
+    return render(request, "reminder.html")

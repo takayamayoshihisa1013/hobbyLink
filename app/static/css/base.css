@@ -12,7 +12,7 @@ main {
 
 main .nav {
     width: 17%;
-    background-color: black;
+    background-color: #00008b;
     height: 95vh;
     color: #ffff;
     padding-top: 5vh;
@@ -46,7 +46,7 @@ main .nav nav ul li {
 }
 
 main .nav nav ul li:hover {
-    background-color: #696969;
+    background-color: #87ceeb;
 }
 
 main .nav nav ul li a {
@@ -61,5 +61,6 @@ main .nav nav ul li a {
 main .content {
     width: 82%;
     /* margin: 2.5vh auto ; */
-    margin-left: 18%;
+    margin-left: 17%;
 }
+

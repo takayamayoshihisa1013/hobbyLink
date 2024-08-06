@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/reminder.css' %}">
+{% endblock %}
+
+{% block title %}
+リマインダー
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="reminder">
+        <section class="timeline_reminder">
+            <div class="reminder_name">
+                <h2>タイムライン</h2>
+            </div>
+            <div class="reminder_text_area">
+                <div class="reminder_text">
+                    <h4>10:05</h4><h3>あなたの投稿にいいねがつきました</h3>
+                </div>
+                
+            </div>
+        </section>
+        <section class="chat_reminder">
+            <div class="reminder_name">
+                <h2>チャット</h2>
+            </div>
+            <div class="reminder_text_area">
+                <div class="reminder_text">
+                    <h4>10:05</h4><h3>虎さんがグループに参加しました</h3>
+                </div>
+                <div class="reminder_text">
+                    <h4>10:05</h4><h3>虎さんがグループに参加しました</h3>
+                </div>
+                <div class="reminder_text">
+                    <h4>10:05</h4><h3>虎さんがグループに参加しました</h3>
+                </div>
+                <div class="reminder_text">
+                    <h4>10:05</h4><h3>虎さんがグループに参加しました</h3>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
+

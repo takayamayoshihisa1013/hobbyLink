@@ -1,0 +1,69 @@
+.content {
+    width: 85%!important;
+    margin-left: 15%;
+    /* background-color: aqua; */
+}
+
+.content .reminder {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-around;
+    width: 80vw;
+    padding: 5vh 0;
+    height: 90vh;
+}
+
+.content section  {
+    width: 35vw;
+    padding: 1vh 1vw;
+    /* background-color: antiquewhite; */
+    height: 100%;
+    /* position: relative; */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+}
+
+.content section .reminder_name {
+    height: 8vh;
+    font-size: 1vw;
+    /* width: 100%; */
+    line-height: 8vh;
+    border-bottom: solid 2px #e6e6e6;
+    padding-left: 1vw;
+    color: #ff6666;
+    
+}
+
+.content section .reminder_text_area {
+    height: 80vh;
+    width: 100%;
+}
+
+.content section .reminder_text_area .reminder_text {
+    height: 8vh;
+    /* border-bottom: 1px solid; */
+    font-size: 1vw;
+    padding-left: 1vw;
+    display: flex;
+    /* border: 1px solid; */
+    margin-top: 1vh;
+    /* background-color: aquamarine; */
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.content section .reminder_text_area .reminder_text h4 {
+    height: 4vh;
+    margin: 2vh 0;
+    line-height: 4vh;
+    font-size: 0.9vw;
+    font-weight: 100;
+}
+
+.content section .reminder_text_area .reminder_text h3 {
+    height: 8vh;
+    line-height: 8vh;
+    margin-left: 1vw;
+    font-weight: 400;
+    font-size: 1.1vw;
+}

@@ -28,11 +28,17 @@
             </div>
             <div class="post_tag"></div>
             <div class="post_footer">
-                <form action="">
+                <form id="like-form-{{ post.id }}" action="{% url 'toggle_like' post.id %}" method="POST">
+                    {% csrf_token %}
+
                     <h3><i class="fa-solid fa-comment"></i>{{ post.comment_set.count }}</h3>
-                    <h3><i class="fa-solid fa-heart"></i>{{ post.like_set.count }}</h3>
+                    <h3>
+                        <i class="fa-solid fa-heart" id="like-icon-{{ post.id }}" onclick="toggleLike({{ post.id }})"></i>
+                        <span id="like-count-{{ post.id }}">{{ post.like_set.count }}</span>
+                    </h3>
                     <h3 id="star"><i class="fa-solid fa-star"></i></h3>
                 </form>
+                
                     
             </div>
         </div>
@@ -46,7 +52,7 @@
             {% for image in post.images.all %}
                 {% if not image == "" %}
                     {% if forloop.first %}
-                    <div id="post_img-{{ post.id }}" class="post_img" style="display: none;" >
+                    <div id="post_img-{{ post.id }}" class="post_img" style="display: none;">
                     
                     {% endif %}
                     <div>
@@ -67,5 +73,6 @@
 
 {% block javascript %}
 <script src="{% static 'js/timeline.js' %}"></script>
+<script src="{% static 'js/like.js' %}"></script>
 
 {% endblock %}

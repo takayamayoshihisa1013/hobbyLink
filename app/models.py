@@ -17,6 +17,7 @@ class Comment(models.Model):
 class Like(models.Model):
     post_id = models.ForeignKey(Post_data, on_delete=models.CASCADE)
     like_num = models.IntegerField(default=0)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE ) 
     
     def __str__(self):
         return self.like_num
