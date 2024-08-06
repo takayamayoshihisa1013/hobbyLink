@@ -27,6 +27,7 @@ def login(request):
             user_data = User.objects.get(email=email, password=password)
             print(user_data)
             request.session['user_id'] = str(user_data.user_id)
+            request.session["user_name"] = user_data.user_name
             return redirect("/hobbyLink/")
         except User.DoesNotExist:
             print("ない")

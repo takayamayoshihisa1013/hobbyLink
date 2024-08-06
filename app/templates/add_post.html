@@ -13,8 +13,8 @@
     <form method="post" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <div class="post_header">
-            <h3 class="user_name">通りすがりの者</h3>
-            <h4 class="user_id">@aaaaa</h4>
+            <h3 class="user_name">{{ user_name }}</h3>
+            <h4 class="user_id">@{{ user_id }}</h4>
         </div>
         <div class="post_body">
             <textarea name="post_text" placeholder="投稿内容を入力してください（必須）"></textarea>

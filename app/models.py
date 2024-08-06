@@ -1,7 +1,11 @@
 from django.db import models
 from user.models import User
+from django.utils import timezone
 
 # Create your models here.
+
+def get_current_time():
+    return timezone.now()
 
 class Post_data(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -12,7 +16,12 @@ class Post_data(models.Model):
 
 class Comment(models.Model):
     post_id = models.ForeignKey(Post_data, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_text = models.TextField()
+    created_at = models.DateTimeField(default=get_current_time)
+    
+    def __str__(self):
+        return self.comment_text
 
 class Like(models.Model):
     post_id = models.ForeignKey(Post_data, on_delete=models.CASCADE)

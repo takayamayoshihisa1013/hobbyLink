@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.http import JsonResponse
 from django.db.models import Prefetch
@@ -69,14 +69,14 @@ def timeline(request):
     return render(request, "timeline.html", context)
 
 def add_post(request):
+    # ユーザーインスタンスを獲得してからじゃないとだめらしい。
+    user = User.objects.get(user_id=request.session["user_id"])
+    
     if request.method == "POST":
         post_text = request.POST.get("post_text")
         tag = request.POST.get("tag")
         post_files = request.FILES.getlist("post_images")
         print(post_text, tag, post_files)
-        
-        # ユーザーインスタンスを獲得してからじゃないとだめらしい。
-        user = User.objects.get(user_id=request.session["user_id"])
         
         new_post = Post_data(
             user_id=user,
@@ -88,11 +88,11 @@ def add_post(request):
         new_post_id = Post_data.objects.get(id=new_post.id)
         print(new_post_id)
         
-        new_post_like = Like(
-            post_id=new_post_id,
-            user_id=user  # ここで正しいUserインスタンスを渡す
-        )
-        new_post_like.save()
+        # new_post_like = Like(
+        #     post_id=new_post_id,
+        #     user_id=user  # ここで正しいUserインスタンスを渡す
+        # )
+        # new_post_like.save()
         
         post_img_dir = os.path.join(settings.BASE_DIR, "app/static/images/post_img")
         if not os.path.exists(post_img_dir):
@@ -112,8 +112,22 @@ def add_post(request):
             )
             
             new_post_img.save()
+    
+        return redirect("/hobbyLink/timeline/")
+    else:
+        user_id = user.profile_id
+        print(user_id)
+        if user_id is None or user_id:
+            user_id = user.user_id
+        
+    
+        
+    context = {
+        "user_name":request.session["user_name"],
+        "user_id":user_id
+    }
             
-    return render(request, "add_post.html")
+    return render(request, "add_post.html", context)
 
 
 
@@ -147,6 +161,11 @@ def toggle_like(request, post_id):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
     
+def comment(request, post_id):
+    
+    print(post_id)
+    
+    return render(request, "comment.html")
     
 def reminder(request):
     

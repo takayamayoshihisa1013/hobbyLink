@@ -8,5 +8,6 @@ urlpatterns = [
     path("timeline/", views.timeline, name="timeline"),
     path("timeline/add_post/", views.add_post, name="add_post"),
     path("reminder/", views.reminder, name="reminder"),
-    path("toggle_like/<int:post_id>/", views.toggle_like, name="toggle_like")
+    path("toggle_like/<int:post_id>/", views.toggle_like, name="toggle_like"),
+    path("timeline/comment/<int:post_id>/", views.comment, name="comment")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

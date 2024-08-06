@@ -1,22 +1,18 @@
-<!-- 投稿された文章を左に、画像がある場合は右に表示する感じはどうか -->
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/timeline.css' %}">
 {% endblock %}
 
 {% block title %}
-タイムライン
+
 {% endblock %}
 
 {% block content %}
 <div class="content">
     <section class="post_section">
-        <form action="" class="post_search">
-            <input type="text" name="post_search">
-            <button type="submit">検索</button>
-        </form>
-        {% for post in posts_with_related_data %}
+        
+        
         <div class="post_comment">
             <div class="post" id="post-{{ post.id }}" onclick="getPostId(this.id)">
                 <div class="post_header">
@@ -32,7 +28,7 @@
                     <form id="like-form-{{ post.id }}" action="{% url 'toggle_like' post.id %}" method="POST">
                         {% csrf_token %}
 
-                        <h3><a href="{% url 'comment' post.id %}"><i class="fa-solid fa-comment"></i>{{ post.comment_set.count }}</a></h3>
+                        <h3><i class="fa-solid fa-comment"></i>{{ post.comment_set.count }}</h3>
                         <h3>
                             <i class="fa-solid fa-heart" id="like-icon-{{ post.id }}" onclick="toggleLike({{ post.id }})"></i>
                             <span id="like-count-{{ post.id }}">{{ post.like_set.count }}</span>
@@ -41,10 +37,23 @@
                     </form>
                 </div>
             </div>
+            <div class="comment">
+                <div class="comment_header">
+                    <h3 class="user_name">さすらいの旅人</h3>
+                    <h4 class="user_id">@aaaaa</h4>
+                    <h4 class="time">10:15</h4>
+                </div>
+                <div class="comment_body">
+                    <p>aaaa</p>
+                </div>
+                <div class="comment_footer">
+
+                </div>
+            </div>
             
         </div>
         
-        {% endfor %}
+        
         <div class="post_add">
             <a href="add_post/">+</a>
         </div>
