@@ -9,19 +9,20 @@
 .post_section {
     width: 50%;
     position: relative;
-    overflow: scroll;
-
-    overflow-x: hidden;
     margin: 0 auto;
     max-height: 100vh;
+
 }
 
 .post_section .post_comment {
     width: 94%;
     border: none;
-    padding: 2%;
+    padding: 2vh 2%;
     margin: 0 auto;
-    min-height: 20vh;
+    height: 85vh;
+    max-height: 85vh;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .post_section .post {
@@ -33,57 +34,11 @@
     margin-bottom: 5px;
 }
 
-.post_section .post_comment:first-of-type {
-    margin-top: 10vh; /* 例として5vhに設定 */
-    /* background-color: #000!important; */
-}
 
 .post_section .post:hover {
     box-shadow: 0 8px 12px rgba(0,0,0,0.15);
     transform: translateY(-5px);
 }
-
-.post_section .post_search {
-    width: 38vw;
-    margin: 0 auto;
-    display: flex;
-    height: 4vh;
-    padding:4vh 1vw 2vh;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    /* background-color: #FFFF; */
-}
-
-.post_section form input, .post_section form button {
-    display: block;
-    height: 4.4vh;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-radius: 20px;
-}
-
-.post_section form input {
-    width: 85%;
-    height: 4vh;
-    border: 1px solid #d1d1d1;
-    padding: 0 15px;
-    border: #000 1px solid;
-}
-
-.post_section form button {
-    width: 10%;
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.post_section form button:hover {
-    background-color: #357abd;
-}
-
-
 
 .post_section .post .post_header {
     display: flex;
@@ -109,6 +64,8 @@
     font-size: 1.0vw;
     font-weight: 400;
     color: #666;
+    
+
 }
 
 .post_section .post .post_header .time {
@@ -117,8 +74,8 @@
     margin-left: auto;
     color: #999;
     font-weight: 400;
-    max-width: 40%;
     white-space: nowrap;
+    width: 40%;
 }
 
 .post_section .post .post_body {
@@ -193,6 +150,28 @@
     transform: scale(1.1);
 }
 
+.comment_form {
+    
+    
+    display: flex;
+    width: 80%;
+    height: 5vh;
+    background-color: #ffff;
+    margin: 0 auto;
+    padding: 3vh 10%;
+
+}
+
+.comment_form input {
+    width: 85%;
+    border-radius: 10px;
+}
+
+.comment_form button {
+    border-radius: 10px;
+    width: 15%;
+}
+
 .post_section .comment {
     width: 90%;
     padding: 2%;
@@ -209,15 +188,21 @@
 }
 
 .post_section .comment .comment_header h3 {
-    font-size:1.0vw;
+    font-size: 1.0vw;
     font-weight: 600;
     margin-left: 1vw;
     color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%; /* 固定幅 */
 }
 
-.post_section .comment .comment_header h4 {
+
+.post_section .comment .comment_header .user_id {
     font-weight: 100;
     color: #666;
+    
 }
 
 .post_section .comment .comment_header .time {
@@ -225,8 +210,17 @@
     text-align: right;
     margin-left: auto;
     color: #999;
-    font-weight: 400;
+    font-weight: 100;
+    width: 40%; /* 固定幅 */
+    white-space: nowrap;
 }
+
+.post_section .comment .comment_header {
+    display: flex;
+    align-items: center;
+}
+
+
 
 .post_section .comment .comment_body {
     min-height: 6vh;

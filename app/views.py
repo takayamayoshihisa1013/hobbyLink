@@ -37,6 +37,7 @@ def timeline(request):
     
     post_search = request.GET.get('post_search', '')
     
+    
     # すべてのPost_dataとそれに関連するComment, Like, Imageを取得
     posts_with_related_data = Post_data.objects.filter(post_text__icontains=post_search).prefetch_related(
         'images',
@@ -129,7 +130,50 @@ def add_post(request):
             
     return render(request, "add_post.html", context)
 
-
+def comment(request, post_id):
+    print(post_id)
+    
+    if request.method == "POST":
+        
+        comment_text = request.POST.get("comment")
+        print(comment_text)
+        
+        post_data_id = Post_data.objects.get(id=post_id)
+        user = User.objects.get(user_id=request.session["user_id"])
+        
+        print(post_data_id, "post_data_id")
+        
+        new_comment = Comment(
+            post_id = post_data_id,
+            comment_text = comment_text,
+            user_id = user
+        )
+        
+        new_comment.save()
+        
+        return redirect(f"/hobbyLink/timeline/comment/{post_id}/")
+    
+    post = Post_data.objects.get(id=post_id)
+    like = Like.objects.filter(post_id=post_id).count()
+    
+    post_comment_data = Post_data.objects.filter(id__icontains=post_id).prefetch_related(
+        Prefetch("comment_set", queryset=Comment.objects.filter(post_id=post)),
+    ).first()
+    
+    comments = post_comment_data.comment_set.all()
+    
+    print(post_comment_data, "post_data")
+    
+    print(post.post_time)
+    
+    context = {
+        "post": post,
+        "post_comment_data":post_comment_data,
+        "like": like,
+        "comments":comments
+    }
+    
+    return render(request, "comment.html", context)
 
 def toggle_like(request, post_id):
     if 'user_id' not in request.session:
@@ -161,12 +205,13 @@ def toggle_like(request, post_id):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
     
-def comment(request, post_id):
-    
-    print(post_id)
-    
-    return render(request, "comment.html")
+
     
 def reminder(request):
     
     return render(request, "reminder.html")
+
+
+def chat(request):
+    
+    return render(request, "chat.html")

@@ -32,3 +32,9 @@ function toggleLike(postId) {
         console.error('Error:', error);
     });
 }
+
+
+function comment(event, postId) {
+    event.preventDefault();
+    window.location.href = `/hobbyLink/timeline/comment/${postId}/`;
+}

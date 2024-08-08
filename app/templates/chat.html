@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block title %}
+チャット
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <section class="friends">
+        <div class="friends_header">
+
+        </div>
+        <div class="friends_body">
+            <h2 class="friend_name">ととと</h2>
+            <h2 class="friend_name">ととと</h2>
+            <h2 class="friend_name">ととと</h2>
+            <h2 class="friend_name">ととと</h2>
+        </div>
+    </section>
+    <section class="chat">
+        <div class="chat_header">
+            <h2>グループ名</h2>
+        </div>
+        <div class="chat_body">
+            <div>
+                <h3>るるる</h3>
+                <p><span class="text">おはよう</span></p>
+            </div>
+            <div class="my">
+                <h3>るらりゆ</h3>
+                <p><span class="text">おはよう</span></p>
+            </div>
+        </div>
+        <div class="chat_footer">
+            <form action="">
+                <input type="text">
+                <button type="submit">送信</button:ty>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
