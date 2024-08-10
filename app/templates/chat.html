@@ -12,7 +12,7 @@
 <div class="content">
     <section class="friends">
         <div class="friends_header">
-
+            <h2 id="new_chat">新しいチャットを始める</h2>
         </div>
         <div class="friends_body">
             <h2 class="friend_name">ととと</h2>
@@ -42,9 +42,16 @@
             </form>
         </div>
     </section>
+    <section class="friend_search">
+        <h1>チャットを始める</h1>
+        <input type="text" id="user_search" autocomplete="new-password">
+        <div id="suggestions" class="suggestions_list"></div>
+    </section>
 </div>
 {% endblock %}
 
 {% block javascript %}
-
+<script src="{% static 'js/chat.js' %}"></script>
+<script src="{% static 'js/user_search.js' %}"></script>
+<script src="{% static 'js/create_chat.js' %}"></script>
 {% endblock %}

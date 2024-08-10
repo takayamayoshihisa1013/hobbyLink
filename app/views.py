@@ -215,3 +215,14 @@ def reminder(request):
 def chat(request):
     
     return render(request, "chat.html")
+
+def search_users(request):
+    query = request.GET.get("q", "")
+    if query:
+        print(query)
+        users = User.objects.filter(user_name__icontains=query)
+        users_data = [{"user_name": user.user_name, "user_id": user.user_id} for user in users]
+        print(users_data)  # デバッグ用にサーバーコンソールに出力
+        return JsonResponse(users_data, safe=False)
+    else:
+        return JsonResponse([], safe=False)
