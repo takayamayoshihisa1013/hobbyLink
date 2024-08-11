@@ -54,19 +54,20 @@ class Image(models.Model):
     def __str__(self):
         return self.filename
 
+
 class Chat(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    is_group = models.BooleanField(default=False)
+    name = models.CharField(max_length=50)
 
 class ChatMember(models.Model):
-    chat = models.ForeignKey(Chat, related_name='members', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='chats', on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Message(models.Model):
-    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE)
-    sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
+    chat_id = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    image = models.CharField(max_length=100, null=True)
 
 
 

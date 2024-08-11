@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/chat.css' %}">
 {% endblock %}
@@ -15,31 +16,30 @@
             <h2 id="new_chat">新しいチャットを始める</h2>
         </div>
         <div class="friends_body">
-            <h2 class="friend_name">ととと</h2>
-            <h2 class="friend_name">ととと</h2>
-            <h2 class="friend_name">ととと</h2>
-            <h2 class="friend_name">ととと</h2>
+            {% for chat in chat_data %}
+                <h2 class="friend_name" id="chat-{{ chat.id }}">{{ chat.name }}</h2>
+            {% endfor %}
         </div>
     </section>
     <section class="chat">
         <div class="chat_header">
             <h2>グループ名</h2>
         </div>
-        <div class="chat_body">
-            <div>
-                <h3>るるる</h3>
-                <p><span class="text">おはよう</span></p>
-            </div>
-            <div class="my">
-                <h3>るらりゆ</h3>
-                <p><span class="text">おはよう</span></p>
-            </div>
-        </div>
+        {% for chat in chat_data %}
+            <div class="chat_body" id="chat_body-{{ chat.id }}">
+            {% for message in chat.message_set.all %}
+                
+                <div class="{% if message.sender.user_id|to_str == login_user %}my{% endif %}">
+                        <h3>{{ message.sender.user_name }}</h3>
+                        <p><span class="text">{{ message.text }}</span></p>
+                    </div>
+                    
+            {% endfor %}
+                </div>
+        {% endfor %}
         <div class="chat_footer">
-            <form action="">
-                <input type="text">
-                <button type="submit">送信</button:ty>
-            </form>
+            <input type="text" id="send_text">
+            <button type="submit" id="send">送信</button>
         </div>
     </section>
     <section class="friend_search">

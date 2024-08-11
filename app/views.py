@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.http import JsonResponse
 from django.db.models import Prefetch
-from .models import Post_data, Image, Like, Comment
+from .models import Post_data, Image, Like, Comment, Chat, ChatMember, Message
 from user.models import User
 import os
 
@@ -214,7 +214,27 @@ def reminder(request):
 
 def chat(request):
     
-    return render(request, "chat.html")
+    chat_data = Chat.objects.all().prefetch_related(
+        Prefetch("message_set", queryset=Message.objects.all())
+    )
+    
+    for chat in chat_data:
+        
+        print(chat.name)
+        chat_body = Message.objects.filter(chat_id = chat.id)
+        # print(chat.id)
+        for message in chat.message_set.all():
+            print(message.text, message.sender, request.session["user_id"])
+            if str(message.sender) == request.session["user_id"]:
+                print("おなじ")
+    
+    
+    context = {
+        "chat_data": chat_data,
+        "login_user":request.session["user_id"]
+    }
+    
+    return render(request, "chat.html", context)
 
 def search_users(request):
     query = request.GET.get("q", "")
@@ -226,3 +246,53 @@ def search_users(request):
         return JsonResponse(users_data, safe=False)
     else:
         return JsonResponse([], safe=False)
+    
+def create_chat(request):
+    if request.method == "POST":
+        friend_id = request.GET.get("q", "")
+        
+        # セッションから現在のユーザーを取得
+        my_user = User.objects.get(user_id=request.session["user_id"])
+        friend_user = User.objects.get(user_id=friend_id)
+        
+        # 新しいチャットを作成
+        new_chat = Chat(name=friend_user.user_name)
+        new_chat.save()
+        
+        # チャットメンバーとして自分と相手を追加
+        ChatMember.objects.bulk_create([
+            ChatMember(chat=new_chat, user=my_user),
+            ChatMember(chat=new_chat, user=friend_user),
+        ])
+    
+    return HttpResponse("hello")
+
+
+def message(request, send_chat_id):
+    # GETリクエストからメッセージを取得
+    message_text = request.GET.get("q", "")
+    
+    # 現在のユーザーとチャットを取得
+    user = User.objects.get(user_id=request.session["user_id"])
+    chat = Chat.objects.get(id=send_chat_id)
+    
+    print(user)
+    
+    # 新しいメッセージを作成
+    new_message = Message(
+        chat_id=chat,  # chatオブジェクトを渡す
+        text=message_text,
+        sender=user  # userオブジェクトを渡す
+    )
+    
+    # メッセージを保存
+    new_message.save()
+    
+    context = {
+        "text": new_message.text,
+        "sender":new_message.sender.user_name,
+        "sender_id": str(new_message.sender.user_id),
+        "login_id": request.session["user_id"]
+    }
+    
+    return JsonResponse(context)
