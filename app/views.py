@@ -282,6 +282,9 @@ def message(request, send_chat_id):
     message_text = request.POST.get("text", "")
     image_file = request.FILES.get("image", None)
 
+    print(message_text, image_file)
+    
+
     # 現在のユーザーとチャットを取得
     user = User.objects.get(user_id=request.session["user_id"])
     chat = Chat.objects.get(id=send_chat_id)
@@ -314,7 +317,7 @@ def message(request, send_chat_id):
     
     print(context)
     
-    return JsonResponse(context)
+    return redirect("/hobbyLink/chat/")
 
     
     return JsonResponse({"error": "Invalid request"}, status=400)
