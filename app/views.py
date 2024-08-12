@@ -13,13 +13,21 @@ from .models import Like, Post_data
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-# Create your views here.
-
-# なんの拡張子かみる
-# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', "avif"}
-
-# def allowed_file(filename):
-#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def save_image_and_get_path(image_file):
+    # ファイルを保存するディレクトリを設定
+    save_dir = os.path.join(settings.BASE_DIR, "app/static/images/chat_img")
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    
+    save_path = os.path.join(save_dir, image_file.name)
+    
+    # ファイルを保存
+    with open(save_path, 'wb+') as destination:
+        for chunk in image_file.chunks():
+            destination.write(chunk)
+    
+    # ファイルのパスを返す
+    return os.path.join(settings.MEDIA_URL, "chat_img", image_file.name)
 
 def home(request):
     # post_img = 
@@ -220,13 +228,14 @@ def chat(request):
     
     for chat in chat_data:
         
-        print(chat.name)
+        # print(chat.name)
         chat_body = Message.objects.filter(chat_id = chat.id)
-        # print(chat.id)
+        print(chat.id)
         for message in chat.message_set.all():
-            print(message.text, message.sender, request.session["user_id"])
-            if str(message.sender) == request.session["user_id"]:
-                print("おなじ")
+            print(message.image)
+            # print(message.text, message.sender, request.session["user_id"])
+            # if str(message.sender) == request.session["user_id"]:
+            #     print("おなじ")
     
     
     context = {
@@ -269,30 +278,43 @@ def create_chat(request):
 
 
 def message(request, send_chat_id):
-    # GETリクエストからメッセージを取得
-    message_text = request.GET.get("q", "")
-    
+    # POSTリクエストからメッセージを取得
+    message_text = request.POST.get("text", "")
+    image_file = request.FILES.get("image", None)
+
     # 現在のユーザーとチャットを取得
     user = User.objects.get(user_id=request.session["user_id"])
     chat = Chat.objects.get(id=send_chat_id)
     
-    print(user)
-    
     # 新しいメッセージを作成
     new_message = Message(
-        chat_id=chat,  # chatオブジェクトを渡す
+        chat_id=chat,
         text=message_text,
-        sender=user  # userオブジェクトを渡す
+        sender=user
     )
+    
+    image_url = None
+    if image_file is not None:
+        print(image_file, "image")
+        
+        # 画像ファイルが存在する場合、ファイルを保存
+        image_url = save_image_and_get_path(image_file)
+        new_message.image = image_file
     
     # メッセージを保存
     new_message.save()
     
     context = {
         "text": new_message.text,
-        "sender":new_message.sender.user_name,
+        "sender": new_message.sender.user_name,
         "sender_id": str(new_message.sender.user_id),
-        "login_id": request.session["user_id"]
+        "login_id": request.session["user_id"],
+        "image_url": image_url  # 画像URLを取得
     }
     
+    print(context)
+    
     return JsonResponse(context)
+
+    
+    return JsonResponse({"error": "Invalid request"}, status=400)

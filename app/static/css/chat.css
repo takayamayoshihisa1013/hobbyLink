@@ -87,7 +87,7 @@ body {
 }
 
 .chat .chat_body div {
-    max-width: 70%;
+    max-width: 50%;
     margin-bottom: 15px;
 }
 
@@ -125,6 +125,16 @@ body {
 .chat .chat_body .my p .text {
     background-color: #dcf8c6;
     color: #333;
+}
+
+.chat_body img {
+    max-width: 100%;
+    display: block;
+    margin: 0 1vw 0 auto;
+}
+
+.chat_body img {
+    margin: 0 auto 0 1vw;
 }
 
 .chat .chat_footer {

@@ -30,14 +30,19 @@
             {% for message in chat.message_set.all %}
                 
                 <div class="{% if message.sender.user_id|to_str == login_user %}my{% endif %}">
-                        <h3>{{ message.sender.user_name }}</h3>
-                        <p><span class="text">{{ message.text }}</span></p>
-                    </div>
+                    <h3>{{ message.sender.user_name }}</h3>
+                    <p><span class="text">{{ message.text }}</span></p>
+                    {% if message.image %}
+                    <img src="{% static 'images/chat_img/' %}{{ message.image }}" alt="">
+                    {% endif %}
+                </div>
                     
             {% endfor %}
                 </div>
         {% endfor %}
         <div class="chat_footer">
+            <input type="hidden" id="csrf_token" value="{{ csrf_token }}">
+            <input type="file" id="send_image">
             <input type="text" id="send_text">
             <button type="submit" id="send">送信</button>
         </div>

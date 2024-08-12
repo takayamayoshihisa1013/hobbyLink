@@ -1,13 +1,5 @@
-document.getElementById("new_chat").addEventListener("click", function() {
-    document.querySelector(".chat").style.display = "none";
-    document.querySelector(".friend_search").style.display = "block";
-
-})
-
-
 document.querySelectorAll(".friend_name").forEach(chat => {
     chat.addEventListener("click", function() {
-        console.log(this.id.split("-"));
         let chat_number = this.id.split("-")[1];
 
         document.querySelectorAll(".chat_body").forEach(chat_num => {
@@ -17,38 +9,75 @@ document.querySelectorAll(".friend_name").forEach(chat => {
         let targetChatBody = document.getElementById(`chat_body-${chat_number}`);
         if (targetChatBody) {
             targetChatBody.style.display = "block";
-            // 既存のイベントリスナーを削除してから新しいものを追加
-            let sendButton = document.getElementById("send");
-            let newSendButton = sendButton.cloneNode(true); // クローンを作成
-            sendButton.parentNode.replaceChild(newSendButton, sendButton); // 古いボタンを新しいものに置き換えするらしい
 
-            newSendButton.addEventListener("click", function() {
+            // 既存のイベントリスナーを削除してから追加
+            let sendButton = document.getElementById("send");
+            sendButton.replaceWith(sendButton.cloneNode(true));
+            sendButton = document.getElementById("send");
+
+            sendButton.addEventListener("click", function() {
                 let send_text = document.getElementById("send_text").value;
-                console.log(send_text);
-                fetch(`${chat_number}/?q=${send_text}`)
+                let send_image = document.getElementById("send_image").files[0];
+
+                let formData = new FormData();
+                formData.append("text", send_text);
+                if (send_image) {
+                    formData.append("image", send_image);
+                }
+
+                let csrfToken = document.getElementById("csrf_token").value;
+                fetch(`${chat_number}/`, {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: formData
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data) {
                         let newMessageDiv = document.createElement("div");
                         newMessageDiv.className = data.sender_id == data.login_id ? 'my' : '';
-                        newMessageDiv.innerHTML = `
-                        <h3>${data.sender}</h3>
-                        <p><span class="text">${data.text}</span></p>
-                        `;
-                        targetChatBody.appendChild(newMessageDiv);
-                        document.getElementById("send_text").value = '';
-                    }
 
+                        if (data.image_url) {
+                            let user_name = document.createElement("h3");
+                            user_name.innerHTML = data.sender;
+                            let p = document.createElement("p");
+                            let span = document.createElement("span");
+                            span.classList.add("text");
+                            span.innerHTML = data.text;
+                            p.appendChild(span);
+                            let chat_img = document.createElement("img");
+                            chat_img.setAttribute("src", `/static/images${data.image_url}`);
+                            newMessageDiv.appendChild(user_name);
+                            newMessageDiv.appendChild(p);
+                            newMessageDiv.appendChild(chat_img);
+                        } else {
+                            let user_name = document.createElement("h3");
+                            user_name.innerHTML = data.sender;
+                            let p = document.createElement("p");
+                            let span = document.createElement("span");
+                            span.classList.add("text");
+                            span.innerHTML = data.text;
+                            p.appendChild(span);
+                            newMessageDiv.appendChild(user_name);
+                            newMessageDiv.appendChild(p);
+                        }
+                        targetChatBody.appendChild(newMessageDiv);
+
+                        document.getElementById("send_text").value = '';
+                        document.getElementById("send_image").value = "";
+                    }
                 })
-            })
-            // エンターキーでメッセージを送信するリスナーを追加
+                .catch(error => console.error('エラーが発生しました:', error));
+            });
+
             document.getElementById("send_text").addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
-                    event.preventDefault();  // デフォルトのエンターキー動作をキャンセル
-                    newSendButton.click();  // 送信ボタンをクリック
+                    event.preventDefault();
+                    sendButton.click();
                 }
             });
         }
-    })
-})
-
+    });
+});
