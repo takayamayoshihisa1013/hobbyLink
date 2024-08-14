@@ -1,0 +1,155 @@
+section {
+    width: 95%;
+    /* background-color: aquamarine; */
+    margin: 5vh auto 0;
+}
+
+
+.header {
+    min-height: 45vh;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+.header .img {
+    width: 20vw;
+    height: 45vh;
+}
+
+.header .img img {
+    display: block;
+    width: 95%;
+    height: 95%;
+    margin: 2.5% auto;
+    border-radius: 50%; /* 画像を丸くする */
+    object-fit: cover; /* 画像の比率を保ちながら中央を切り取る */
+}
+
+.header .user {
+    width: 50vw;
+}
+
+.header .user h1 {
+    margin-top: 5vh;
+    font-size: 2.0vw;
+}
+
+.header .user p {
+    margin-top: 4vh;
+    font-size: 1.1vw;
+}
+
+.user_post {
+    display: flex;
+}
+
+.user_post .post_list {
+    width: 50%;
+    position: relative;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin: 0 auto;
+    max-height: 100vh;
+}
+
+.user_post .post_list .post_comment {
+    width: 94%;
+    border: none;
+    padding: 2%;
+    margin: 0 auto;
+    min-height: 20vh;
+}
+
+.user_post .post_list .post_comment .post {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    background-color: #ffffff;
+    padding: 2%;
+    margin-bottom: 5px;
+}
+
+.user_post .post_list .post_comment .post_header {
+    display: flex;
+    border-bottom: 1px solid #e6e6e6;
+    height: 5vh;
+    width: 100%;
+    line-height: 5vh;
+    align-items: center;
+}
+
+.user_post .post_list .post_comment .post_header h3 {
+    font-size: 1.1vw;
+    font-weight: 600;
+    margin-left: 1vw;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%;
+    white-space: nowrap;
+}
+
+.user_post .post_list .post_comment .post_header h4 {
+    font-size: 0.9vw;
+    text-align: right;
+    margin-left: auto;
+    color: #999;
+    font-weight: 400;
+    max-width: 40%;
+    white-space: nowrap;
+}
+
+.user_post .post_list .post_comment .post_body {
+    min-height: 4vh;
+    margin: 1vh 1vw;
+    color: #333;
+    line-height: 1.6;
+}
+
+.user_post .post_list .post_comment .post_footer {
+    height: 5vh;
+    font-size: 0.9vw;
+}
+
+.user_post .post_list .post_comment .post_footer form {
+    justify-content: space-around;
+    display: flex;
+    height: 100%;
+    line-height: 5vh;
+}
+
+.user_post .post_list .post_comment .post_footer form h3 {
+    font-weight: 400;
+    width: 3.5vw;
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s;
+    display: block;
+}
+
+.user_post .img_list {
+    width: 50%;
+    min-height: 100vh;
+    border-left: 1px solid #e6e6e6;
+    background-color: #ffffff;
+    max-height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.user_post .img_list div{
+    width: 98%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.user_post .img_list div img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+

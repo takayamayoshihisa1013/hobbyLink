@@ -14,8 +14,11 @@ class Post_data(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_time = models.DateTimeField(auto_now_add=True)
     post_text = models.TextField()
+    # post_tag = models.TextField()
     # def __str__(self):
         # return self.user_id
+
+
 
 class Comment(models.Model):
     post_id = models.ForeignKey(Post_data, on_delete=models.CASCADE)
@@ -32,7 +35,7 @@ class Like(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE ) 
     
     def __str__(self):
-        return self.like_num
+        return str(self.like_num)
 
 class Favorite(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -69,7 +72,9 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=100, null=True)
 
-
+class Post_tag(models.Model):
+    post_id = models.ForeignKey(Post_data, on_delete=models.CASCADE)
+    tag_id = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
 # @receiver(post_save, sender=Chat)
 # def add_members_to_chat(sender, instance, created, **kwargs):

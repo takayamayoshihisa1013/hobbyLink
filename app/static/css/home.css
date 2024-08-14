@@ -1,82 +1,132 @@
 body {
-    background-color: #f5f8fa;
-    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f5f5f5'/%3E%3Ccircle cx='10' cy='10' r='2' fill='%23a0c4ff' opacity='0.3'/%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%23bdb2ff' opacity='0.3'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%239bf6ff' opacity='0.3'/%3E%3Ccircle cx='70' cy='70' r='2.5' fill='%23caffbf' opacity='0.3'/%3E%3Ccircle cx='90' cy='90' r='2' fill='%23ffd6a5' opacity='0.3'/%3E%3C/svg%3E");
+    font-family: 'Lato', sans-serif;
     color: #333;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 .content {
     display: flex;
     justify-content: space-between;
-    min-height: 95vh;
-    width: 90%;
-    margin: 0 auto;
+    height: 100vh;
+    width: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .left, .right {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.left {
+    flex: 3;
+    overflow-y: auto;
+    margin-right: 20px;
+}
+
+.right {
     flex: 1;
-    margin: 10px;
+    justify-content: space-between;
 }
 
 .left .trend_post,
 .right .trend_tag,
 .right .reminder {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    padding: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid #e0e0e0;
+}
+
+.right .trend_tag,
+.right .reminder {
+    flex: 1;
+    overflow-y: auto;
     margin-bottom: 20px;
 }
 
 .left .trend_post:hover,
 .right .trend_tag:hover,
 .right .reminder:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
 }
 
 .content h1 {
     font-size: 1.8em;
-    color: #4a90e2;
-    border-bottom: 2px solid #e6e6e6;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    color: #4a6fa5;
+    border-bottom: 2px solid #98c1d9;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
 .post, .tag, .item {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid #e0e0e0;
 }
 
 .post:hover, .tag:hover, .item:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .user_name, .name, .title {
     font-size: 1.2em;
     font-weight: bold;
-    color: #4a90e2;
-    margin-bottom: 5px;
+    color: #3d5a80;
+    margin-bottom: 10px;
 }
 
 .post_content, .count, .description {
     font-size: 1em;
-    color: #666;
-    line-height: 1.5;
+    color: #4a4a4a;
+    line-height: 1.6;
 }
 
 .time {
-    font-size: 0.8em;
-    color: #999;
+    font-size: 0.9em;
+    color: #888;
     text-align: right;
-    margin-top: 10px;
+    margin-top: 15px;
+}
+
+/* Scrollbar styling */
+.left::-webkit-scrollbar,
+.right .trend_tag::-webkit-scrollbar,
+.right .reminder::-webkit-scrollbar {
+    width: 8px;
+}
+
+.left::-webkit-scrollbar-track,
+.right .trend_tag::-webkit-scrollbar-track,
+.right .reminder::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.left::-webkit-scrollbar-thumb,
+.right .trend_tag::-webkit-scrollbar-thumb,
+.right .reminder::-webkit-scrollbar-thumb {
+    background: #98c1d9;
+    border-radius: 4px;
+}
+
+.left::-webkit-scrollbar-thumb:hover,
+.right .trend_tag::-webkit-scrollbar-thumb:hover,
+.right .reminder::-webkit-scrollbar-thumb:hover {
+    background: #4a6fa5;
 }
 
 @media (max-width: 768px) {
@@ -86,5 +136,16 @@ body {
 
     .left, .right {
         width: 100%;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .right {
+        height: auto;
+    }
+
+    .right .trend_tag,
+    .right .reminder {
+        max-height: 300px;
     }
 }

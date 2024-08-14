@@ -94,10 +94,20 @@ body {
     font-weight: 600;
     margin-bottom: 5px;
     color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+    white-space: nowrap;
+}
+
+.chat .chat_body .my h3 {
+    text-align: right;
+    margin-left: auto;
 }
 
 .chat .chat_body div p {
     margin: 0;
+    font-size: 0.9vw;
 }
 
 .chat .chat_body div p .text {
@@ -105,6 +115,7 @@ body {
     padding: 10px 15px;
     display: inline-block;
     word-break: break-word;
+    font-size: 1vw;
 }
 
 .chat .chat_body div:not(.my) p .text {
@@ -115,6 +126,7 @@ body {
 .chat .chat_body .my {
     margin-left: auto;
 }
+
 
 .chat .chat_body .my p, .chat .chat_body .my h3 {
     text-align: right;
@@ -128,12 +140,16 @@ body {
 .chat_body img {
     max-width: 100%;
     display: block;
+    margin: 0 auto 0 1vw;
+}
+
+.chat_body .my img {
+    max-width: 100%;
+    display: block;
     margin: 0 1vw 0 auto;
 }
 
-.chat_body img {
-    margin: 0 auto 0 1vw;
-}
+
 
 .chat .chat_footer {
     height: calc(7.5vh - 3px);

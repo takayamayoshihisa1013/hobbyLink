@@ -32,7 +32,11 @@
                     <div class="{% if message.sender.user_id|to_str == login_user %}my{% endif %}">
                         <h3>{{ message.sender.user_name }}</h3>
                         {% if message.text != "" %}
-                            <p><span class="text">{{ message.text }}</span></p>
+                            {% if message.sender.user_id|to_str == login_user %}
+                                <p>{{ message.timestamp|date:"H:i" }}<span class="text">{{ message.text }}</span></p>
+                            {% else %}
+                                <p><span class="text">{{ message.text }}</span>{{ message.timestamp|date:"H:i" }}</p>
+                            {% endif %}
                         {% endif %}
                         {% if message.image %}
                         <img src="{% static 'images/chat_img/' %}{{ message.image }}" alt="">

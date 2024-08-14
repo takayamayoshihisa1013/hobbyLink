@@ -26,7 +26,11 @@
                 <div class="post_body">
                     <p>{{ post.post_text }}</p>
                 </div>
-                <div class="post_tag"></div>
+                <div class="post_tag">
+                    {% for tag in post.post_tag_set.all %}
+                        {{ tag.tag_id.tag }}
+                    {% endfor %}
+                </div>
                 <div class="post_footer">
                     <form id="like-form-{{ post.id }}" action="{% url 'toggle_like' post.id %}" method="POST">
                         {% csrf_token %}

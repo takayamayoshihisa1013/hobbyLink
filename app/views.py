@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
+from django.db.models import Count
 from django.http import JsonResponse
 from django.db.models import Prefetch
-from .models import Post_data, Image, Like, Comment, Chat, ChatMember, Message
+from .models import Post_data, Image, Like, Comment, Chat, ChatMember, Message, Tag, Post_tag
 from user.models import User
 import os
 
@@ -30,16 +31,22 @@ def save_image_and_get_path(image_file):
     return os.path.join(settings.MEDIA_URL, "chat_img", image_file.name)
 
 def home(request):
-    # post_img = 
-    posts_with_images = Post_data.objects.prefetch_related("images")
-    for post in posts_with_images:
-        print(f"Post by {post.user_id.user_name} at {post.post_time}")
-        print(f"Text: {post.post_text}")
-        print("Images:")
-        for image in post.images.all():
-            print(image.filename)
-    # print(post)
-    return render(request, "home.html")
+    
+
+    post_data = Post_data.objects.all().annotate(like_count=Count('like')).order_by('-like_count').prefetch_related(
+        Prefetch("like_set", queryset=Like.objects.all()),
+        Prefetch("comment_set", queryset=Comment.objects.all())
+    )
+
+    
+    # for post in post_data:
+    #     print(post)
+    #     for comment in post.comment_set.all():
+    #         print(comment.comment_text)
+    #     for like in post.like_set.all():
+    #         print(like.like_num)
+    
+    return render(request, "home.html", {"post_data":post_data})
 
 def timeline(request):
     
@@ -50,7 +57,8 @@ def timeline(request):
     posts_with_related_data = Post_data.objects.filter(post_text__icontains=post_search).prefetch_related(
         'images',
         Prefetch('comment_set', queryset=Comment.objects.all()),
-        Prefetch('like_set', queryset=Like.objects.all())
+        Prefetch('like_set', queryset=Like.objects.all()),
+        Prefetch('post_tag_set__tag_id', queryset=Tag.objects.all())
     )
     
     for post in posts_with_related_data:
@@ -71,6 +79,10 @@ def timeline(request):
         print("Likes:")
         for like in post.like_set.all():
             print(like.like_num)
+        
+        for tag_name in post.post_tag_set.all():
+            print(tag_name.tag_id.tag)
+        
     # print(posts_with_related_data)
     context = {
         "posts_with_related_data":posts_with_related_data
@@ -83,9 +95,9 @@ def add_post(request):
     
     if request.method == "POST":
         post_text = request.POST.get("post_text")
-        tag = request.POST.get("tag")
+        tag_list = request.POST.get("tag", "").split()
         post_files = request.FILES.getlist("post_images")
-        print(post_text, tag, post_files)
+        print(post_text, tag_list, post_files)
         
         new_post = Post_data(
             user_id=user,
@@ -97,11 +109,9 @@ def add_post(request):
         new_post_id = Post_data.objects.get(id=new_post.id)
         print(new_post_id)
         
-        # new_post_like = Like(
-        #     post_id=new_post_id,
-        #     user_id=user  # ここで正しいUserインスタンスを渡す
-        # )
-        # new_post_like.save()
+        for tag_name in tag_list:
+            tag, created = Tag.objects.get_or_create(tag = tag_name)
+            Post_tag.objects.create(post_id=new_post_id, tag_id = tag)
         
         post_img_dir = os.path.join(settings.BASE_DIR, "app/static/images/post_img")
         if not os.path.exists(post_img_dir):
@@ -121,6 +131,10 @@ def add_post(request):
             )
             
             new_post_img.save()
+        
+        
+                
+        
     
         return redirect("/hobbyLink/timeline/")
     else:
@@ -320,4 +334,49 @@ def message(request, send_chat_id):
     return redirect("/hobbyLink/chat/")
 
     
-    return JsonResponse({"error": "Invalid request"}, status=400)
+def tag_list(request):
+    
+    tag_list_data = Tag.objects.all()
+    
+    tag_list = []
+    
+    tag_list = [{"name": tag.tag} for tag in tag_list_data] 
+
+    return JsonResponse(tag_list, safe=False)
+
+def profile(request):
+    
+    posts_with_related_data = Post_data.objects.filter(user_id=request.session["user_id"]).prefetch_related(
+        'images',
+        Prefetch('comment_set', queryset=Comment.objects.all()),
+        Prefetch('like_set', queryset=Like.objects.all()),
+        Prefetch('post_tag_set__tag_id', queryset=Tag.objects.all())
+    )
+    
+    for post in posts_with_related_data:
+        print(f"Post by {post.user_id.user_name} at {post.post_time}")
+        print(f"Text: {post.post_text}")
+        
+        # 画像を表示
+        print("Images:")
+        for image in post.images.all():
+            print(image.filename)
+        
+        # コメントを表示
+        print("Comments:")
+        for comment in post.comment_set.all():
+            print(comment.comment_text)
+        
+        # いいねを表示
+        print("Likes:")
+        for like in post.like_set.all():
+            print(like.like_num)
+        
+        for tag_name in post.post_tag_set.all():
+            print(tag_name.tag_id.tag)
+        
+    # print(posts_with_related_data)
+    context = {
+        "posts_with_related_data":posts_with_related_data
+    }
+    return render(request, "profile.html", context)

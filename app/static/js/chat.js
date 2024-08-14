@@ -12,6 +12,9 @@ document.querySelectorAll(".friend_name").forEach(chat => {
         if (targetChatBody) {
             console.log(targetChatBody)
             targetChatBody.style.display = "block";
+
+            targetChatBody.querySelector(".chat_body").scrollTop = targetChatBody.querySelector(".chat_body").scrollHeight;
+            console.log(targetChatBody)
         }
 
         document.querySelectorAll(".chat").forEach(chat_num => {

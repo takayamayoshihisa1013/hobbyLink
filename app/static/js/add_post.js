@@ -12,35 +12,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const tagInput = document.getElementById('tag_input');
     const suggestionsBox = document.getElementById('suggestions');
-    const options = ["#こんにちは", "#こんばんは", "#おはようございます"];
-
-    tagInput.addEventListener('input', function () {
-        const value = tagInput.value.trim();
-        if (value.endsWith('#')) {
-            showSuggestions('');
-        } else if (value.endsWith(' ')) {
-            tagInput.value += '#';
-            showSuggestions('');
-        } else {
-            showSuggestions(value.split(' ').pop());
+    fetch("/hobbyLink/tag_list/")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    });
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        const options = data.map(item => item.name);
 
-    function showSuggestions(input) {
-        suggestionsBox.innerHTML = '';
-        const filteredOptions = options.filter(option => option.includes(input));
-        filteredOptions.forEach(option => {
-            const suggestionItem = document.createElement('div');
-            suggestionItem.classList.add('suggestion-item');
-            suggestionItem.textContent = option;
-            suggestionItem.addEventListener('click', () => {
-                tagInput.value = tagInput.value.replace(/[^ ]*$/, '') + option + ' ';
-                suggestionsBox.innerHTML = '';
-                tagInput.focus();
-            });
-            suggestionsBox.appendChild(suggestionItem);
+        tagInput.addEventListener('input', function () {
+            const value = tagInput.value.trim();
+            if (value.endsWith('#')) {
+                showSuggestions('');
+            } else if (value.endsWith(' ')) {
+                tagInput.value += '#';
+                showSuggestions('');
+            } else {
+                showSuggestions(value.split(' ').pop());
+            }
         });
-    }
+
+        function showSuggestions(input) {
+            suggestionsBox.innerHTML = '';
+            const filteredOptions = options.filter(option => option.includes(input));
+            filteredOptions.forEach(option => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.textContent = option;
+                suggestionItem.addEventListener('click', () => {
+                    tagInput.value = tagInput.value.replace(/[^ ]*$/, '') + option + ' ';
+                    suggestionsBox.innerHTML = '';
+                    tagInput.focus();
+                });
+                suggestionsBox.appendChild(suggestionItem);
+            });
+        }
+    })  
 
     document.addEventListener('click', function (event) {
         if (!tagInput.contains(event.target) && !suggestionsBox.contains(event.target)) {

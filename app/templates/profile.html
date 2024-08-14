@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block title %}
+プロフィール
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <section class="header">
+        <div class="img">
+            <img src="{% static 'images/mikakunintouhikousyoujo.jpg' %}" alt="">
+        </div>
+        <div class="user">
+            <h1>るらりゆ</h1>
+            <p>こんにちは！私は趣味を通じて新しい人々と出会うことが大好きです。自然の中での活動や、新しい料理に挑戦することにワクワクします。このサイトで皆さんと趣味の話ができるのを楽しみにしています。新しい発見や経験を共有していきましょう！</p>
+        </div>
+    </section>
+    <section class="user_post">
+        <div class="post_list">
+            {% for post in posts_with_related_data %}
+            <div class="post_comment">
+                <div class="post" id="post-{{ post.id }}" onclick="getPostId(this.id)">
+                    <div class="post_header">
+                        <h3 class="user_name">{{ post.user_id.user_name }}<span class="user_id">@{{ post.user_id }}</span></h3>
+                        <h4 class="time">{{ post.post_time }}</h4>
+                    </div>
+                    <div class="post_body">
+                        <p>{{ post.post_text }}</p>
+                    </div>
+                    <div class="post_tag">
+                        {% for tag in post.post_tag_set.all %}
+                            {{ tag.tag_id.tag }}
+                        {% endfor %}
+                    </div>
+                    <div class="post_footer">
+                        <form id="like-form-{{ post.id }}" action="{% url 'toggle_like' post.id %}" method="POST">
+                            {% csrf_token %}
+    
+                            <h3 onclick="comment(event, {{ post.id }})">
+                                <i class="fa-solid fa-comment"></i>{{ post.comment_set.count }}
+                            </h3>
+                            <h3>
+                                <i class="fa-solid fa-heart" id="like-icon-{{ post.id }}" onclick="toggleLike({{ post.id }})"></i>
+                                <span id="like-count-{{ post.id }}">{{ post.like_set.count }}</span>
+                            </h3>
+                            <h3 id="star"><i class="fa-solid fa-star"></i></h3>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            {% endfor %}
+        </div>
+        <div class="img_list">
+            {% for post in posts_with_related_data %}
+            {% for image in post.images.all %}
+                {% if not image == "" %}
+                    {% if forloop.first %}
+                    <div id="post_img-{{ post.id }}" class="post_img" style="display: none;">
+                    
+                    {% endif %}
+                    <div>
+                        <img src="{% static 'images/post_img/' %}{{ image.filename }}" alt="">
+                    </div>
+                    {% if forloop.last %}
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <h2>画像は投稿されていません</h2>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+<script src="{% static 'js/timeline.js' %}"></script>
+<script src="{% static 'js/like.js' %}"></script>
+
+{% endblock %}
