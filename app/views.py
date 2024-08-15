@@ -28,9 +28,19 @@ def save_image_and_get_path(image_file):
     # ファイルのパスを返す
     return os.path.join(settings.MEDIA_URL, "chat_img", image_file.name)
 
-def home(request):
-    
+def login_check(request):
+    if "user_id" not in request.session:
+        print("check")
+        return redirect("/user/login/")
+    return None
 
+def home(request):
+    print("chac")
+    # セッションチェックしてリダイレクトを受け取る
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
+    # print(request.session["user_id"])
     post_data = Post_data.objects.all().annotate(like_count=Count('like')).order_by('-like_count').prefetch_related(
         Prefetch("like_set", queryset=Like.objects.all()),
         Prefetch("comment_set", queryset=Comment.objects.all())
@@ -53,7 +63,10 @@ def home(request):
     return render(request, "home.html", {"post_data":post_data, "favorite_tag":favorite_tag})
 
 def timeline(request):
-    
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
+    # print(requ
     post_search = request.GET.get('post_search', '')
     
     
@@ -94,6 +107,12 @@ def timeline(request):
     return render(request, "timeline.html", context)
 
 def add_post(request):
+    
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
+    # print(requ
+    
     # ユーザーインスタンスを獲得してからじゃないとだめらしい。
     user = User.objects.get(user_id=request.session["user_id"])
     
@@ -155,6 +174,11 @@ def add_post(request):
 def comment(request, post_id):
     print(post_id)
     
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
+    # print(requ
+    
     if request.method == "POST":
         
         comment_text = request.POST.get("comment")
@@ -198,6 +222,7 @@ def comment(request, post_id):
     return render(request, "comment.html", context)
 
 def toggle_like(request, post_id):
+    
     if 'user_id' not in request.session:
         return JsonResponse({'success': False, 'error': 'User not authenticated'}, status=403)
     
@@ -233,6 +258,11 @@ def reminder(request):
 
 
 def chat(request):
+    
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
+    # print(requ
     
     chat_data = Chat.objects.all().prefetch_related(
         Prefetch("message_set", queryset=Message.objects.all())
@@ -334,6 +364,11 @@ def tag_list(request):
 
 def profile(request, user_id):
     
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
+    # print(requ
+    
     user_data = User.objects.get(user_id = user_id)
     
     my_user_id = False
@@ -377,6 +412,10 @@ def profile(request, user_id):
     return render(request, "profile.html", context)
 
 def profile_change(request):
+    
+    redirect_response = login_check(request)
+    if redirect_response:
+        return redirect_response
     
     change_user = get_object_or_404(User, user_id=request.session["user_id"])
     
