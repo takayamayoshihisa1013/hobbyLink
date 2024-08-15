@@ -48,8 +48,8 @@ section {
 .user_post .post_list {
     width: 50%;
     position: relative;
-    overflow: scroll;
-    overflow-x: hidden;
+    /* overflow: scroll;
+    overflow-x: hidden; */
     margin: 0 auto;
     max-height: 100vh;
 }
@@ -138,6 +138,7 @@ section {
     max-height: 100vh;
     overflow: scroll;
     overflow-x: hidden;
+    /* transition: 0.4s; */
 }
 
 .user_post .img_list div{
