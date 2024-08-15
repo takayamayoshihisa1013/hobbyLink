@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/profile_change.css' %}">
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <form class="header" action="" method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="img">
+            <input type="file" id="file" name="user_icon" class="user_icon" accept="image/*" onchange="previewImage(event)">
+            <label for="file" id="file-label">
+                {% if change_user.user_icon == "" %}
+                    <i class="fa-solid fa-plus"></i>
+                {% else %}
+                    <img src="{% static 'images/profile_icon' %}/{{ change_user.user_icon }}" alt="">
+                {% endif %}
+            </label>
+        </div>
+        <div class="user">
+            <input type="text" name="user_name" class="user_name" placeholder="ユーザー名を入力して下さい" value="{{ change_user.user_name }}">
+            <textarea name="profile_text" id="" placeholder="プロフィールを入力してください"></textarea>
+            <button type="submit">完了</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/profile_change.js' %}"></script>
+{% endblock %}

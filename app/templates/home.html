@@ -15,7 +15,7 @@
             <div class="post">
                 <div class="user_name">{{ post.user_id.user_name }}</div>
                 <div class="post_content">{{ post.post_text }}</div>
-                <div class="time">10分前</div>
+                <div class="time">{{ post.post_time }}</div>
             </div>
             
             {% endfor %}
@@ -24,16 +24,15 @@
     <div class="right">
         <section class="trend_tag">
             <h1>注目のタグ</h1>
+            {% for tag in favorite_tag %}
+                
             <div class="tag">
-                <div class="name">#タグ1</div>
-                <div class="count">100件の投稿</div>
+                <div class="name">{{ tag.tag_id__tag }}</div>
+                <div class="count">{{ tag.tag_count }}件の投稿</div>
             </div>
-            <div class="tag">
-                <div class="name">#タグ2</div>
-                <div class="count">200件の投稿</div>
-            </div>
+            {% endfor %}
         </section>
-        <section class="reminder">
+        <!-- <section class="reminder">
             <h1>通知</h1>
             <div class="item">
                 <div class="title">リマインダー1</div>
@@ -45,7 +44,7 @@
                 <div class="description">ここにリマインダーの内容が表示されます...</div>
                 <div class="time">2時間前</div>
             </div>
-        </section>
+        </section> -->
     </div>
 </div>
 {% endblock %}

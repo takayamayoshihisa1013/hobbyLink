@@ -42,7 +42,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     padding: 25px;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     border: 1px solid #e0e0e0;
 }
 

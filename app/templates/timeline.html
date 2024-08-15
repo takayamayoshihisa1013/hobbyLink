@@ -20,7 +20,7 @@
         <div class="post_comment">
             <div class="post" id="post-{{ post.id }}" onclick="getPostId(this.id)">
                 <div class="post_header">
-                    <h3 class="user_name">{{ post.user_id.user_name }}<span class="user_id">@{{ post.user_id }}</span></h3>
+                    <h3 class="user_name"><a href="/hobbyLink/profile/{{ post.user_id }}/">{{ post.user_id.user_name }}<span class="user_id">@{{ post.user_id }}</span></a></h3>
                     <h4 class="time">{{ post.post_time }}</h4>
                 </div>
                 <div class="post_body">
@@ -34,7 +34,6 @@
                 <div class="post_footer">
                     <form id="like-form-{{ post.id }}" action="{% url 'toggle_like' post.id %}" method="POST">
                         {% csrf_token %}
-
                         <h3 onclick="comment(event, {{ post.id }})">
                             <i class="fa-solid fa-comment"></i>{{ post.comment_set.count }}
                         </h3>

@@ -15,5 +15,6 @@ urlpatterns = [
     path("chat/create_table/", views.create_chat, name="create.chat"),
     path("chat/<int:send_chat_id>/", views.message, name="message"),
     path("tag_list/", views.tag_list, name="tag_list"),
-    path("profile/", views.profile, name="profile"),
+    path("profile/profile_change/", views.profile_change, name="profile_change"),
+    path("profile/<str:user_id>/", views.profile, name="profile"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -104,6 +104,11 @@
     white-space: nowrap;
 }
 
+.post_section .post .post_header .user_name a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .post_section .post .post_header .user_id {
     font-size: 1.0vw;
     font-weight: 400;

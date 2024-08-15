@@ -1,0 +1,87 @@
+.header {
+    width: 95%;
+    min-height: 45vh;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid;
+    border-radius: 10px;
+    margin: 20vh auto 0;
+}
+
+.header .img {
+    width: 20vw;
+    height: 45vh;
+}
+
+.header .img .user_icon {
+    display: none;
+}
+
+.header .img label {
+    display: block;
+    width: 95%;
+    height: 42.75vh;
+    margin: 2.5% auto;
+    border-radius: 50%; /* 画像を丸くする */
+    object-fit: cover; /* 画像の比率を保ちながら中央を切り取る */
+    background-color: #d3d3d3;
+    line-height: 42.75vh;
+    text-align: center;
+    font-size: 2vw;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.header .img label:hover {
+    background-color: #a9a9a9;
+}
+
+.header .img label img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    
+}
+
+.header .user {
+    width: 50vw;
+}
+
+.header .user h1 {
+    margin-top: 5vh;
+    font-size: 2.0vw;
+}
+
+.header .user p {
+    margin-top: 4vh;
+    font-size: 1.1vw;
+}
+
+.header .user .user_name {
+    display: block;
+    height: calc(5vh - 0.5%);
+    width: 89%;
+    border-radius: 10px;
+    border: 1px solid #555;
+    margin: 5vh auto 0;
+    padding: 0.5% 1%;
+}
+
+.header .user textarea {
+    display: block;
+    width: 89%;
+    height: calc(20vh - 0.5%);
+    border-radius: 10px;
+    margin: 3vh auto 0;
+    padding: 1% 1%;
+    font-size: 1vw;
+    font-weight: 400;
+}
+
+.header .user button {
+    display: block;
+    width: 10vw;
+    height: 5vh;
+    margin: 2vh auto;
+}

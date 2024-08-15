@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.conf import settings
 from django.db.models import Count
 from django.http import JsonResponse
@@ -6,8 +6,6 @@ from django.db.models import Prefetch
 from .models import Post_data, Image, Like, Comment, Chat, ChatMember, Message, Tag, Post_tag
 from user.models import User
 import os
-
-
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Like, Post_data
@@ -38,6 +36,12 @@ def home(request):
         Prefetch("comment_set", queryset=Comment.objects.all())
     )
 
+    favorite_tag = Post_tag.objects.values('tag_id', 'tag_id__tag').annotate(tag_count=Count('tag_id')).order_by('-tag_count')
+    
+    print(favorite_tag)
+    
+    for tag in favorite_tag:
+        print(tag["tag_id__tag"])
     
     # for post in post_data:
     #     print(post)
@@ -46,7 +50,7 @@ def home(request):
     #     for like in post.like_set.all():
     #         print(like.like_num)
     
-    return render(request, "home.html", {"post_data":post_data})
+    return render(request, "home.html", {"post_data":post_data, "favorite_tag":favorite_tag})
 
 def timeline(request):
     
@@ -131,11 +135,7 @@ def add_post(request):
             )
             
             new_post_img.save()
-        
-        
-                
-        
-    
+
         return redirect("/hobbyLink/timeline/")
     else:
         user_id = user.profile_id
@@ -227,8 +227,6 @@ def toggle_like(request, post_id):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
     
-
-    
 def reminder(request):
     
     return render(request, "reminder.html")
@@ -247,16 +245,12 @@ def chat(request):
         print(chat.id)
         for message in chat.message_set.all():
             print(message.image)
-            # print(message.text, message.sender, request.session["user_id"])
-            # if str(message.sender) == request.session["user_id"]:
-            #     print("おなじ")
-    
-    
+
     context = {
         "chat_data": chat_data,
         "login_user":request.session["user_id"]
     }
-    
+
     return render(request, "chat.html", context)
 
 def search_users(request):
@@ -328,24 +322,25 @@ def message(request, send_chat_id):
         "login_id": request.session["user_id"],
         "image_url": image_url  # 画像URLを取得
     }
-    
     print(context)
-    
     return redirect("/hobbyLink/chat/")
 
-    
 def tag_list(request):
-    
     tag_list_data = Tag.objects.all()
-    
     tag_list = []
-    
     tag_list = [{"name": tag.tag} for tag in tag_list_data] 
 
     return JsonResponse(tag_list, safe=False)
 
-def profile(request):
+def profile(request, user_id):
     
+    user_data = User.objects.get(user_id = user_id)
+    
+    my_user_id = False
+    
+    if user_id == request.session["user_id"]:
+        my_user_id = True
+
     posts_with_related_data = Post_data.objects.filter(user_id=request.session["user_id"]).prefetch_related(
         'images',
         Prefetch('comment_set', queryset=Comment.objects.all()),
@@ -374,9 +369,41 @@ def profile(request):
         
         for tag_name in post.post_tag_set.all():
             print(tag_name.tag_id.tag)
-        
-    # print(posts_with_related_data)
     context = {
-        "posts_with_related_data":posts_with_related_data
+        "posts_with_related_data":posts_with_related_data,
+        "user":user_data,
+        "my_user_id":my_user_id
     }
     return render(request, "profile.html", context)
+
+def profile_change(request):
+    
+    change_user = get_object_or_404(User, user_id=request.session["user_id"])
+    
+    if request.method == "POST":
+        user_name = request.POST.get("user_name", "")
+        profile_text = request.POST.get("profile_text", "")
+        icon = request.FILES.get("user_icon", "")
+        print(user_name, profile_text, icon)
+        
+        
+        if user_name != "":
+            change_user.user_name = user_name
+        
+        change_user.profile_text = profile_text
+        
+        if icon != "":
+            change_user.user_icon = icon
+            post_img_dir = os.path.join(settings.BASE_DIR, "app/static/images/profile_icon")
+            if not os.path.exists(post_img_dir):
+                os.makedirs(post_img_dir)
+            file_path = os.path.join(post_img_dir, icon.name)
+            with open(file_path, 'wb+') as destination:
+                for chunk in icon.chunks():
+                        destination.write(chunk)
+        change_user.save()
+        
+        return redirect(f"/hobbyLink/profile/{request.session['user_id']}/")
+        
+        
+    return render(request, "profile_change.html", {"change_user":change_user})

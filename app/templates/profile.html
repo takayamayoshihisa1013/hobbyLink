@@ -13,11 +13,18 @@
 <div class="content">
     <section class="header">
         <div class="img">
-            <img src="{% static 'images/mikakunintouhikousyoujo.jpg' %}" alt="">
+            {% if user.user_icon != "" %}
+                <img src="{% static 'images/profile_icon/' %}{{ user.user_icon }}" alt="">
+            {% else %}
+                <img src="{% static 'images/profile_icon/nomal.png' %}" alt="" style="object-fit: contain;">
+            {% endif %}
         </div>
         <div class="user">
-            <h1>るらりゆ</h1>
-            <p>こんにちは！私は趣味を通じて新しい人々と出会うことが大好きです。自然の中での活動や、新しい料理に挑戦することにワクワクします。このサイトで皆さんと趣味の話ができるのを楽しみにしています。新しい発見や経験を共有していきましょう！</p>
+            {% if my_user_id %}
+            <a href="/hobbyLink/profile/profile_change/">編集</a>
+            {% endif %}
+            <h1 {% if not my_user_id %}style="margin-top: 5vh;"{% endif %}>{{ user.user_name }}<span>@{{ user.user_id }}</span></h1>
+            <p>{{ user.profile_text }}</p>
         </div>
     </section>
     <section class="user_post">

@@ -31,9 +31,30 @@ section {
     width: 50vw;
 }
 
+.header .user a {
+    display: block;
+    height: 5vh;
+    /* margin-top: 1vh; */
+    border: 1px solid;
+    border-radius: 10px;
+    line-height: 5vh;
+    width: 5vw;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    margin: 2vh 1vw 0 auto;
+    background-color: #333;
+    color: #FFFF;
+}
+
 .header .user h1 {
-    margin-top: 5vh;
     font-size: 2.0vw;
+    width: 100%;
+}
+
+.header .user h1 span {
+    color: #999;
+    font-weight: 400;
 }
 
 .header .user p {
